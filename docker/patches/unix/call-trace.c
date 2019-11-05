@@ -334,11 +334,18 @@ void INSTRUMENT __cyg_profile_func_enter(void *this_fn, void *call_site)
 
     describe_address(to, LINEBUF, this_fn);
     describe_address(from, LINEBUF, call_site);
-    log("tid=%d -trace- calling [%s] from [%s]", syscall(SYS_gettid), to, from);
+    log("\ntid=%d -trace- calling [%s] from [%s]", syscall(SYS_gettid), to, from);
+    fflush(stdout);
 }
 
 void INSTRUMENT __cyg_profile_func_exit(void *this_fn ATTRIBUTE_UNUSED,
                                         void *call_site ATTRIBUTE_UNUSED)
 {
+}
+
+int trace_open(char *s, int m, int p) {
+    log("\ntid=%d -open- [%s]", syscall(SYS_gettid), s);
+    fflush(stdout);
+    return open(s, m, p);
 }
 
