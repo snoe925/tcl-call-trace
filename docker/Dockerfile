@@ -12,10 +12,11 @@ RUN cd /root/tcl && \
 
 COPY patches /root/patches
 
+#    /usr/bin/env CFLAGS="-DTCL_COMPILE_DEBUG -finstrument-functions -no-pie" LDFLAGS=-lbfd ./configure --disable-shared --enable-symbols && \
 RUN cd /root/tcl/unix && \
     cp /root/patches/unix/* . && \
     cp /root/patches/generic/* ../generic && \
-    /usr/bin/env CFLAGS="-DTCL_COMPILE_DEBUG -finstrument-functions -no-pie" LDFLAGS=-lbfd ./configure --disable-shared --enable-symbols && \
+    /usr/bin/env CFLAGS="-finstrument-functions -no-pie" LDFLAGS=-lbfd ./configure --enable-threads --disable-shared --enable-symbols && \
     make tclsh
 
 CMD ["sleep", "366d"]
