@@ -449,7 +449,9 @@ VarHashCreateVar(
 		(unsigned) (pc - codePtr->codeStart),		\
 		GetOpcodeName(pc));				\
 	printf a;						\
+        call_trace_print_enable = 0;                            \
 	TclPrintObject(stdout, objPtr, 30);			\
+        call_trace_print_enable = 1;                            \
 	fprintf(stdout, "\n");					\
 	break;							\
     }
@@ -2372,7 +2374,7 @@ TEBCresume(
      */
 
     CHECK_STACK();
-    if (traceInstructions) {
+    if (1 /* traceInstructions */) {
 	call_trace_print_enable = 0;
 	fprintf(stdout, "-bytecode- %2d: %2d ", iPtr->numLevels, (int) CURR_DEPTH);
 	TclPrintInstruction(codePtr, pc);
